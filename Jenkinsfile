@@ -19,17 +19,22 @@ pipeline {
         stage('Checkout git repository') {
             steps {
                 script {
-                    def gitUrl = 'https://github.com/keshav4u/nest-app-jenkiens-build.git'
+                    def gitUrl = 'git://github.com/keshav4u/nest-app-jenkiens-build.git'
+
                     checkout([$class: 'GitSCM', 
                         branches: [[name: '*/main']],
                         userRemoteConfigs: [[url: gitUrl]],
-                        extensions: [[$class: 'CleanBeforeCheckout'], 
-                                      [$class: 'CloneOption', noTags: false, shallow: true, depth: 1]]
+                        extensions: [
+                            [$class: 'CleanBeforeCheckout'], 
+                            [$class: 'CloneOption', noTags: false, shallow: true, depth: 1, reference: '', timeout: 10]
+                        ]
                     ])
-                    echo "Checked out repository: $gitUrl"
+
+                    echo "✅ Checked out repository: ${gitUrl}"
                 }
             }
         }
+        
         stage('Build application') {
             steps {
                 sh 'chmod +x ./ci/build.sh && ./ci/build.sh'
