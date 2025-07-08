@@ -1,0 +1,45 @@
+# Steps to setup Jenkins server
+1. Create a new folder in your local machine
+2. Copy the Dockerfile and steps-to-setup-jenkines-server.txt in the newly created folder
+3. Open the terminal and navigate to the newly created folder
+4. Run the following command to build the docker image
+
+docker build -t jenkins-docker-enabled .
+
+5. Run the following command to start the docker container
+
+docker run -d \
+  --name jenkins-docker \
+  -u root \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v jenkins_home:/var/jenkins_home \
+  -p 8080:8080 \
+  -p 50000:50000 \
+  jenkins-docker-enabled
+
+After running the new container, test inside it:
+
+docker exec -it jenkins-docker bash
+docker version
+
+We need to log in to Docker Hub in order to push the image.
+To do this, we should add the following command in the Jenkins "Execute shell" build step before the Docker build step:
+
+$ docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
+
+After adding this command we need to map the Docker Hub credentials to the Jenkins credentials.
+
+Jenkins step under the "Build Environment" section: 
+-> Use secret text(s) or file(s) -> Username with password (Separated)
+
+Add the following credentials:
+
+DOCKER_HUB_USER
+DOCKER_HUB_PASSWORD
+
+
+
+To setup the jenkines plugin using the groovy script, we need to add the following step
+-> Manage Jenkins -> Script Console
+-> Paste the groovy script from the jenkines-plugin-script folder
+-> Run the script
