@@ -20,13 +20,13 @@ pipeline {
             steps {
                 script {
                     def gitUrl = 'https://github.com/keshav4u/nest-app-jenkiens-build.git'
-                    
-                    checkout([$class: 'GitSCM', 
+
+                    checkout([$class: 'GitSCM',
                         branches: [[name: '*/main']],
-                        userRemoteConfigs: [[url: gitUrl]],
+                        userRemoteConfigs: [[url: 'https://github.com/keshav4u/nest-app-jenkiens-build.git']],
                         extensions: [
                             [$class: 'CleanBeforeCheckout'], 
-                            [$class: 'CloneOption', noTags: false, shallow: true, depth: 1, reference: '', timeout: 10]
+                            [$class: 'CloneOption', noTags: false, shallow: true, depth: 1]
                         ]
                     ])
 
