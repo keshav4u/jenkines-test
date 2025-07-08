@@ -19,8 +19,8 @@ pipeline {
         stage('Checkout git repository') {
             steps {
                 script {
-                    def gitUrl = 'git://github.com/keshav4u/nest-app-jenkiens-build.git'
-
+                    def gitUrl = 'https://github.com/keshav4u/nest-app-jenkiens-build.git'
+                    
                     checkout([$class: 'GitSCM', 
                         branches: [[name: '*/main']],
                         userRemoteConfigs: [[url: gitUrl]],
@@ -34,7 +34,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Build application') {
             steps {
                 sh 'chmod +x ./ci/build.sh && ./ci/build.sh'
