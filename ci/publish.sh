@@ -8,7 +8,7 @@ if [ -z "$BUILD_TAG" ]; then
 fi
 
 echo "🚀 Building Docker image with tag: $BUILD_TAG"
-docker build -t keshav4u/nest-app-jenkiens-build:$BUILD_TAG -f ../Dockerfile .
+docker build -t keshav4u/nest-app-jenkiens-build:$BUILD_TAG -f Dockerfile .
 
 if [ -z "${DOCKER_HUB_USER}" ]; then
   echo "⚠️ Skipping docker push as DOCKER_HUB_USER is not set"
