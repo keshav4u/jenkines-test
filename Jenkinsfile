@@ -48,7 +48,7 @@ pipeline {
                     def buildNumber = env.BUILD_NUMBER ?: 'Unknown Build Number'
                     
                     echo "Publishing Docker image for job: $jobName, build number: $buildNumber"
-                    withCredentials([usernamePassword(credentialsId: 'e5afe58c-7da8-40a1-ac2f-b011849e83b3', passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USER')]) {
+                    withCredentials([usernamePassword(credentialsId: '75acf694-b39c-4177-8d89-a5b3775f3567', passwordVariable: 'DOCKER_HUB_PASSWORD', usernameVariable: 'DOCKER_HUB_USER')]) {
                         sh 'chmod +x ./ci/publish.sh && ./ci/publish.sh'
                         sh './ci/publish.sh $buildNumber'
                         
