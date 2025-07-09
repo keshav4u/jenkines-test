@@ -19,11 +19,11 @@ pipeline {
         stage('Checkout git repository') {
             steps {
                 script {
-                    def gitUrl = 'https://github.com/keshav4u/nest-app-jenkiens-build.git'
+                    def gitUrl = 'https://github.com/keshav4u/jenkines-test.git'
 
                     checkout([$class: 'GitSCM',
                         branches: [[name: '*/main']],
-                        userRemoteConfigs: [[url: 'https://github.com/keshav4u/nest-app-jenkiens-build.git']],
+                        userRemoteConfigs: [[url: gitUrl]],
                         extensions: [
                             [$class: 'CleanBeforeCheckout'], 
                             [$class: 'CloneOption', noTags: false, shallow: true, depth: 1]
