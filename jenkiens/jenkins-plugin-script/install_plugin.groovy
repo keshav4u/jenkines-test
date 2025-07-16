@@ -6,6 +6,7 @@ def plugins = [
     "docker-build-publish",
     "workflow-aggregator",
     "nodejs",
+    "pipeline-stage-view"
 ]
 
 def instance = Jenkins.getInstance()

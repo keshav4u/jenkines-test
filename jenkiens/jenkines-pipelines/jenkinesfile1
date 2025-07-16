@@ -1,18 +1,25 @@
 pipeline {
-    agent Agent
+    agent any
+    environment {
+        // Define any environment variables here if needed
+        VERSION = "0.2.0"
+        RELEASE_VERSION = "R.2.0"
+    }
     stages {
-        stage('Verify shell environment') {
+        stage('Audit tools') {
             steps {
-                script {
-                    def jobName = env.JOB_NAME ?: 'Unknown Job'
-                    def buildNumber = env.BUILD_NUMBER ?: 'Unknown Build Number'
-                    def buildUrl = env.BUILD_URL ?: 'Unknown Build URL'
-                    echo "Job Name: $jobName"
-                    echo "Build Number: $buildNumber"
-                    echo "Build URL: $buildUrl"
-                    sh 'docker --version'
-                    sh 'node --version'
-                }
+                sh '''
+                    echo "=== Auditing tools ==="
+                    echo "Git version:"
+                    git --version
+                    echo "Docker version:"
+                    docker --version
+                    echo "Node.js version:"
+                    node -v
+                    echo "NPM version:"
+                    npm -v
+
+                '''
             }
         }
        
@@ -34,7 +41,7 @@ pipeline {
                 }
             }
         }
-
+        
         stage('Build application') {
             steps {
                 sh 'chmod +x ./ci/build.sh && ./ci/build.sh'
@@ -56,6 +63,6 @@ pipeline {
                     echo "Docker image published successfully for job: $jobName, build number: $buildNumber"
                 }
             }
-        }
+        }       
     }
 }
