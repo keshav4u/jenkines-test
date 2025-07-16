@@ -1,5 +1,7 @@
 pipeline {
-    agent Agent
+    agent {
+        label 'Agent'
+    }
     stages {
         stage('Verify shell environment') {
             steps {
